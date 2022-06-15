@@ -1,12 +1,18 @@
-import telebot
-import translators as ts
+import logging
+from aiogram import executor
+from create_bot import dp
+from handlers import client, other
 
-bot = telebot.TeleBot('5414940662:AAHldK9P55Wn4HR60-pM2J04VlvYEutgMHY')
-
-
-@bot.message_handler(content_types=['text', 'document'])
-def get_text_messages(message):
-    bot.send_message(message.from_user.id, ts.google(message.text, from_language='auto', to_language='ru'))
+logging.basicConfig(level=logging.INFO)
 
 
-bot.polling(none_stop=True, interval=0)
+async def on_startup(_):
+    print('Bot online')
+
+
+client.reg_handlers_client(dp)
+other.reg_handlers_other(dp)
+
+
+if __name__ == '__main__':
+    executor.start_polling(dp, skip_updates=True, on_startup=on_startup)
