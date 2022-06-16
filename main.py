@@ -6,13 +6,9 @@ from handlers import client, other
 logging.basicConfig(level=logging.INFO)
 
 
-async def on_startup(_):
-    print('Bot online')
-
-
 client.reg_handlers_client(dp)
 other.reg_handlers_other(dp)
 
 
 if __name__ == '__main__':
-    executor.start_polling(dp, skip_updates=True, on_startup=on_startup)
+    executor.start_polling(dp, skip_updates=True)
